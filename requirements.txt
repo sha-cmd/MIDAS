@@ -1,0 +1,4 @@
+dbt-core==1.7.18
+dbt-bigquery==1.7.9
+pandas
+mimesis

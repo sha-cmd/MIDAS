@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dbt-pipeline
+spec:
+  schedule: "5 4 * * 1"  # Exécuter toutes les 6 heures
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dbt
+            image: europe-west1-docker.pkg.dev/dbtk8s/dbtk8sregistry/dbt-core:latest
+            args:
+            - "run"
+            volumeMounts:
+            - name: service-account
+              mountPath: /app/service-account.json
+              subPath: service-account.json
+              readOnly: true
+            - name: profiles
+              mountPath: /app/profiles.yml
+              subPath: profiles.yml
+              readOnly: true
+          volumes:
+          - name: service-account
+            secret:
+              secretName: dbt-service-account
+          - name: profiles
+            configMap:
+              name: dbt-profiles
+          restartPolicy: OnFailure

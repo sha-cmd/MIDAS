@@ -1,0 +1,14 @@
+dbtk8s:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: dbtk8s
+      dataset: raw_data
+      keyfile: /home/romain/git/keys/dbtk8s.json
+      location: europe-west1
+      threads: 1
+      priority: interactive
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+  target: dev
