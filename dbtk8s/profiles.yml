@@ -4,7 +4,7 @@ dbtk8s:
       type: bigquery
       method: service-account
       project: dbtk8s
-      dataset: raw_data
+      dataset: rawsrc
       keyfile: /home/romain/git/keys/dbtk8s.json
       location: europe-west1
       threads: 1
