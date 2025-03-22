@@ -39,4 +39,5 @@ jobs:
 
     - name: Update Kubernetes deployment
       run: |
+        gcloud components install gke-gcloud-auth-plugin
         kubectl set image cronjob/dbt-pipeline dbt=europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
