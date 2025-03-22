@@ -33,6 +33,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
+        gcloud auth configure-docker europe-west1-docker.pkg.dev
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
 
