@@ -22,10 +22,11 @@ jobs:
         sudo apt-get update
         python -m pip install --upgrade pip
         pip install dbt-core dbt-bigquery
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-        sudo curl https://packages.cloud.google.com/apt/doc/apt-key.gpg > /usr/share/keyrings/cloud.google.gpg 
-        sudo apt-get update
-        sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
+
+    - name: Install gke-gcloud-auth-plugin
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        install_components: 'gke-gcloud-auth-plugin'
 
     - name: Setup gcloud
       uses: 'google-github-actions/auth@v2'
