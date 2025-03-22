@@ -21,6 +21,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install dbt-core dbt-bigquery
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg > /usr/share/keyrings/cloud.google.gpg 
+        apt-get update
+        sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 
     - name: Setup gcloud
       uses: 'google-github-actions/auth@v2'
@@ -39,5 +43,4 @@ jobs:
 
     - name: Update Kubernetes deployment
       run: |
-        sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
         kubectl set image cronjob/dbt-pipeline dbt=europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
