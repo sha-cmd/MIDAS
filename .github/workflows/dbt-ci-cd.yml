@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: 'google-github-actions/auth@v2'
+      with:
+        project_id: 'dbtk8s'
+        workload_identity_provider: 'projects/dbtk8s/locations/global/workloadIdentityPools/github/providers/MISTRAL'
+        service_account: '559544864549-compute@developer.gserviceaccount.com'
 
     - name: Set up Python
       uses: actions/setup-python@v2
