@@ -18,7 +18,7 @@ jobs:
     - uses: 'google-github-actions/auth@v2'
       with:
         project_id: 'dbtk8s'
-        workload_identity_provider: 'projects/dbtk8s/locations/global/workloadIdentityPools/github/providers/MIDAS'
+        workload_identity_provider: 'projects/559544864549/locations/global/workloadIdentityPools/github/providers/MIDAS'
         service_account: '559544864549-compute@developer.gserviceaccount.com'
 
     - name: Set up Python
