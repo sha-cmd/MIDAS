@@ -6,12 +6,12 @@ variable "project_id" {
 
 variable "region" {
   description = "La région GCP"
-  default     = "europe-west1"
+  default     = "europe-west8"
   type        = string
 }
 
 variable "node_count" {
   description = "Nombre de nœuds dans le cluster"
-  default     = 2
+  default     = 1
   type        = number
 }
