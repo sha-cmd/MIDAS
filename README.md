@@ -62,7 +62,7 @@ kubectl create secret generic dbt-service-account --from-file=/home/romain/git/k
 # Créer une ConfigMap pour la configuration de dbt
 kubectl create configmap dbt-profiles --from-file=dbtk8s/profiles.yml
 # Appliquer cette configuration de cronjob
-kubectl apply -f dbt-cronjob.yaml
+kubectl apply -f dbt-cronjob.yml
 ```
 
 9. Intégration CI/CD pour l'Automatisation
@@ -72,3 +72,31 @@ Pour automatiser CI/CD, nous configurons GitHub Actions.
 Configurez les secrets GitHub nécessaires :
    - GCP_SA_KEY : Contenu de votre fichier de clé de compte de service
    - GCP_PROJECT_ID : ID de votre projet GCP
+
+Ou bien par OIDC :
+```bash
+gcloud iam workload-identity-pools create "github" \
+  --project="${PROJECT_ID}" \
+  --location="global" \
+  --display-name="GitHub Actions Pool"
+  
+ 
+gcloud iam workload-identity-pools providers create-oidc "my-repo" \
+  --project="${PROJECT_ID}" \
+  --location="global" \
+  --workload-identity-pool="github" \
+  --display-name="My GitHub repo Provider" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.repository=assertion.repository,attribute.repository_owner=assertion.repository_owner" \
+  --attribute-condition="assertion.repository_owner == '${GITHUB_ORG}'" \
+  --issuer-uri="https://token.actions.githubusercontent.com"
+```
+
+Pour obtenir la chaîne de workload_identity_provider :
+```bash
+gcloud iam workload-identity-pools providers describe "my-repo" \
+--project="${PROJECT_ID}" \
+--location="global" \
+--workload-identity-pool="github" \
+--format="value(name)"
+```
+La sortie doit ressembler à 'projects/123456789/locations/global/workloadIdentityPools/github/providers/my-repo'
