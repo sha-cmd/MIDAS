@@ -49,10 +49,10 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        gcloud auth configure-docker europe-west8-docker.pkg.dev
-        docker build -t europe-west8-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest .
-        docker push europe-west8-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
+        gcloud auth configure-docker europe-west1-docker.pkg.dev
+        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest .
+        docker push europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
 
     - name: Update Kubernetes deployment
       run: |
-        kubectl set image cronjob/dbt-pipeline dbt=europe-west8-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
+        kubectl set image cronjob/dbt-pipeline dbt=europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_PROJECT_ID }}registry/dbt-core:latest
