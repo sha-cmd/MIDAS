@@ -6,7 +6,7 @@ dbtk8s:
       project: dbtk8s
       dataset: rawsrc
       keyfile: /home/romain/git/keys/dbtk8s.json
-      location: europe-west1
+      location: europe-west8
       threads: 1
       priority: interactive
       job_execution_timeout_seconds: 300
