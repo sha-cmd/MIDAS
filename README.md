@@ -25,12 +25,13 @@ Un exemple de pipeline moderne utilisant GCloud, Data Build Tools, Kubernetes, D
 
 ```bash
 terraform init
+terraform plan
 terraform apply
 ```
 
 5. Configurez kubectl pour accéder à votre cluster :
 ```bash
-gcloud container clusters get-credentials dbt-k8s-cluster  --region europe-west1 --project dbtk8s
+gcloud container clusters get-credentials dbt-k8s-cluster  --region europe-west8 --project dbtk8s
 ```
 
 6. Installer dbt Core pour BigQuery et tester la connexion :
@@ -81,7 +82,7 @@ gcloud iam workload-identity-pools create "github" \
   --display-name="GitHub Actions Pool"
   
  
-gcloud iam workload-identity-pools providers create-oidc "my-repo" \
+gcloud iam workload-identity-pools providers create-oidc "midas" \
   --project="${PROJECT_ID}" \
   --location="global" \
   --workload-identity-pool="github" \
@@ -93,10 +94,10 @@ gcloud iam workload-identity-pools providers create-oidc "my-repo" \
 
 Pour obtenir la chaîne de workload_identity_provider :
 ```bash
-gcloud iam workload-identity-pools providers describe "my-repo" \
+gcloud iam workload-identity-pools providers describe "midas" \
 --project="${PROJECT_ID}" \
 --location="global" \
 --workload-identity-pool="github" \
 --format="value(name)"
 ```
-La sortie doit ressembler à 'projects/123456789/locations/global/workloadIdentityPools/github/providers/my-repo'
+La sortie doit ressembler à 'projects/123456789/locations/global/workloadIdentityPools/github/providers/my-repo', il suffit de le positionner dans le workflow GitHub Actions.
