@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: dbt-pipeline
 spec:
-  schedule: "5 4 * * 1"  # Exécuter toutes les 6 heures
+  schedule: "5 4 * * 1"
   jobTemplate:
     spec:
       template:
